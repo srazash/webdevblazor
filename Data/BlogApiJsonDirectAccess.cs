@@ -148,4 +148,46 @@ public class BlogApiJsonDirectAccess : IBlogApi
         await SaveAsync<Tag>(_tags, _settings.TagsFolder, $"{item.Id}.json", item);
         return item;
     }
+
+    public Task DeleteBlogPostAsync(string id)
+    {
+        DeleteAsync(_blogPosts, _settings.BlogPostsFolder, id);
+        if (_blogPosts != null)
+        {
+            var item = _blogPosts.FirstOrDefault(b => b.Id == id);
+            if (item != null)
+            {
+                _blogPosts.Remove(item);
+            }
+        }
+        return Task.CompletedTask;
+    }
+
+    public Task DeleteCategoryAsync(string id)
+    {
+        DeleteAsync(_categories, _settings.CategoriesFolder, id);
+        if (_categories != null)
+        {
+            var item = _categories.FirstOrDefault(b => b.Id == id);
+            if (item != null)
+            {
+                _categories.Remove(item);
+            }
+        }
+        return Task.CompletedTask;
+    }
+
+    public Task DeleteTagAsync(string id)
+    {
+        DeleteAsync(_tags, _settings.TagsFolder, id);
+        if (_tags != null)
+        {
+            var item = _tags.FirstOrDefault(b => b.Id == id);
+            if (item != null)
+            {
+                _tags.Remove(item);
+            }
+        }
+        return Task.CompletedTask;
+    }
 }
