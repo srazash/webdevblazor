@@ -9,7 +9,7 @@ public class BlogApiJsonDirectAccess : IBlogApi
 {
     BlogApiJsonDirectAccessSetting _settings;
 
-    public BlogApiJsonDirectAccess(IPowerFunctions<BlogApiJsonDirectAccessSetting> option)
+    public BlogApiJsonDirectAccess(IOptions<BlogApiJsonDirectAccessSetting> option)
     {
         _settings = option.Value;
 
@@ -128,7 +128,7 @@ public class BlogApiJsonDirectAccess : IBlogApi
         return _tags.FirstOrDefault(b => b.Id == id);
     }
 
-    public async Task<BlogPost?> SaveBlogAsync(BlogPost item)
+    public async Task<BlogPost?> SaveBlogPostAsync(BlogPost item)
     {
         if (item.Id == null) item.Id = Guid.NewGuid().ToString();
         await SaveAsync<BlogPost>(_blogPosts, _settings.BlogPostsFolder, $"{item.Id}.json", item);
@@ -188,6 +188,14 @@ public class BlogApiJsonDirectAccess : IBlogApi
                 _tags.Remove(item);
             }
         }
+        return Task.CompletedTask;
+    }
+
+    public Task InvalidateCacheAsync()
+    {
+        _blogPosts = null;
+        _tags = null;
+        _categories = null;
         return Task.CompletedTask;
     }
 }
