@@ -60,4 +60,45 @@ public class BlogApiJsonDirectAccess : IBlogApi
         Load<Category>(ref _categories, _settings.CategoriesFolder);
         return Task.CompletedTask;
     }
+
+    private async Task SaveAsync<T>(List<T>? list, string folder, string filename, T item)
+    {
+        var filepath = $@"{_settings.DataPath}\{folder}\{filename}";
+        await File.WriteAllTextAsync(filepath, JsonSerializer.Serialize<T>(item));
+
+        if (list == null) list = new();
+        if (!list.Contains(item)) list.Add(item);
+    }
+
+    private void DeleteAsync<T>(List<T>? list, string folder, string id)
+    {
+        var filepath = $@"{_settings.DataPath}\{folder}\{id}.json";
+        try
+        {
+            File.Delete(filepath);
+        }
+        catch { }
+    }
+
+    public async Task<List<BlogPost>?> GetBlogPostsAsync(int numberofposts, int startindex)
+    {
+        await LoadBlogPostsAsync();
+        return _blogPosts ?? new();
+    }
+
+    public async Task<BlogPost?> GetBlogPostAsync(string id)
+    {
+        await LoadBlogPostsAsync();
+        if (_blogPosts == null) throw new Exception("Blog posts not found");
+        return _blogPosts.FirstOrDefault(b => b.Id == id);
+    }
+
+    public async Task<int> GetBlogPostCountAsync()
+    {
+        await LoadBlogPostsAsync();
+        if (_blogPosts == null)
+            return 0;
+        else
+            return _blogPosts.Count();
+    }
 }
