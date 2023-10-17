@@ -101,4 +101,17 @@ public class BlogApiJsonDirectAccess : IBlogApi
         else
             return _blogPosts.Count();
     }
+
+    public async Task<List<Category>?> GetCategoriesAsync()
+    {
+        await LoadCategoriesAsync();
+        return _categories ?? new();
+    }
+
+    public async Task<Category?> GetCategoryAsync(string id)
+    {
+        await LoadCategoriesAsync();
+        if (_categories == null) throw new Exception("Categories not found");
+        return _categories.FirstOrDefault(b => b.Id == id);
+    }
 }
