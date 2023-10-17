@@ -114,4 +114,17 @@ public class BlogApiJsonDirectAccess : IBlogApi
         if (_categories == null) throw new Exception("Categories not found");
         return _categories.FirstOrDefault(b => b.Id == id);
     }
+
+    public async Task<List<Tag>?> GetTagsAsync()
+    {
+        await LoadTagsAsync();
+        return _tags ?? new();
+    }
+
+    public async Task<Tag?> GetTagAsync(string id)
+    {
+        await LoadTagsAsync();
+        if (_tags == null) throw new Exception("Tags not found");
+        return _tags.FirstOrDefault(b => b.Id == id);
+    }
 }
