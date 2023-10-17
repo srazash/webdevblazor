@@ -127,4 +127,25 @@ public class BlogApiJsonDirectAccess : IBlogApi
         if (_tags == null) throw new Exception("Tags not found");
         return _tags.FirstOrDefault(b => b.Id == id);
     }
+
+    public async Task<BlogPost?> SaveBlogAsync(BlogPost item)
+    {
+        if (item.Id == null) item.Id = Guid.NewGuid().ToString();
+        await SaveAsync<BlogPost>(_blogPosts, _settings.BlogPostsFolder, $"{item.Id}.json", item);
+        return item;
+    }
+
+    public async Task<Category?> SaveCategoryAsync(Category item)
+    {
+        if (item.Id == null) item.Id = Guid.NewGuid().ToString();
+        await SaveAsync<Category>(_categories, _settings.CategoriesFolder, $"{item.Id}.json", item);
+        return item;
+    }
+
+    public async Task<Tag?> SaveTagAsync(Tag item)
+    {
+        if (item.Id == null) item.Id = Guid.NewGuid().ToString();
+        await SaveAsync<Tag>(_tags, _settings.TagsFolder, $"{item.Id}.json", item);
+        return item;
+    }
 }
