@@ -27,5 +27,37 @@ public class BlogApiJsonDirectAccess : IBlogApi
     private List<Category>? _categories;
     private List<Tag>? _tags;
 
-    // implement the API!
+    private void Load<T>(ref List<T>? list, string folder)
+    {
+        if (list == null)
+        {
+            list = new();
+            var fullpath = $@"{_settings.DataPath}\{folder}";
+
+            foreach (var f in Directory.GetFiles(fullpath))
+            {
+                var json = File.ReadAllText(f);
+                var bp = JsonSerializer.Deserialize<T>(json);
+                if (bp != null) list.Add(bp);
+            }
+        }
+    }
+
+    private Task LoadBlogPostsAsync()
+    {
+        Load<BlogPost>(ref _blogPosts, _settings.BlogPostsFolder);
+        return Task.CompletedTask;
+    }
+
+    private Task LoadTagsAsync()
+    {
+        Load<Tag>(ref _tags, _settings.TagsFolder);
+        return Task.CompletedTask;
+    }
+
+    private Task LoadCategoriesAsync()
+    {
+        Load<Category>(ref _categories, _settings.CategoriesFolder);
+        return Task.CompletedTask;
+    }
 }
