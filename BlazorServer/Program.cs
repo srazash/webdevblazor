@@ -13,7 +13,7 @@ builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options =>
 {
-    options.DataPath = @"..\..\..\Data\";
+    options.DataPath = @"..\BlogData\";
     options.BlogPostsFolder = "BlogPosts";
     options.TagsFolder = "Tags";
     options.CategoriesFolder = "Categories";
