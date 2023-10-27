@@ -1,5 +1,6 @@
 using Data;
 using Data.Models.Interfaces;
+using BlazorWebAssembly.Server.Endpoints;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Options;
 
@@ -13,7 +14,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>()
 	.Configure(options =>
 	{
-		options.DataPath = @"../BlogData/";
+		options.DataPath = @"../../BlogData/";
 		options.BlogPostsFolder = "BlogPosts";
 		options.TagsFolder = "Tags";
 		options.CategoriesFolder = "Categories";
@@ -42,6 +43,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.MapBlogPostApi();
 
 app.MapRazorPages();
 app.MapControllers();
