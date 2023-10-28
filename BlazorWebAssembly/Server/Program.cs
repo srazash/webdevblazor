@@ -44,6 +44,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapBlogPostApi();
+app.MapCategoryApi();
 
 app.MapRazorPages();
 app.MapControllers();
