@@ -3,6 +3,10 @@
 @using Data.Models
 @inject IBlogApi _api
 
+<PageTitle>My Blog</PageTitle>
+
+<h4>My Blog posts</h4>
+
 <ul>
     <Virtualize ItemsProvider="LoadPosts" Context="p">
         <li>
@@ -10,6 +14,8 @@
         </li>
     </Virtualize>
 </ul>
+
+<em>@totalBlogPosts posts</em>
 
 @code{
     public int totalBlogPosts { get; set; }

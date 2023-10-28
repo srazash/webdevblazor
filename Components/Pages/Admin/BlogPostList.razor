@@ -12,20 +12,21 @@
     </Virtualize>
 </ul>
 
+<em>Blog posts: @TotalBlogPosts total</em>
+
 @code {
-    public int TotalBlogposts { get; set; }
+    public int TotalBlogPosts { get; set; }
 
     private async ValueTask<ItemsProviderResult<BlogPost>>
 
     LoadPosts(ItemsProviderRequest request)
     {
-        if (TotalBlogposts == 0)
+        if (TotalBlogPosts == 0)
         {
-            TotalBlogposts = await
-            _api.GetBlogPostCountAsync();
+            TotalBlogPosts = await _api.GetBlogPostCountAsync();
         }
-        var numblogposts = Math.Min(request.Count, TotalBlogposts - request.StartIndex);
+        var numblogposts = Math.Min(request.Count, TotalBlogPosts - request.StartIndex);
         List<BlogPost> posts = (await _api.GetBlogPostsAsync(numblogposts, request.StartIndex)) ?? new();
-        return new ItemsProviderResult<BlogPost> (posts, TotalBlogposts);
+        return new ItemsProviderResult<BlogPost> (posts, TotalBlogPosts);
     }
 }
