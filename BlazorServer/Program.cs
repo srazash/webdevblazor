@@ -22,6 +22,8 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>().Configure(options 
 
 builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
 
+builder.Configuration.AddJsonFile("auth.json");
+
 builder.Services.AddAuth0WebAppAuthentication(options =>
 {
     options.Domain = builder.Configuration["Auth0:Authority"] ?? "";
