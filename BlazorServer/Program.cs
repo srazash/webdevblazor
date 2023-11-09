@@ -4,8 +4,11 @@ using Data.Models.Interfaces;
 using Auth0.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Components.RazorComponents;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<ILoginStatus,LoginStatus>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
