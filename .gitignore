@@ -4,4 +4,4 @@ bin/
 obj/
 .fake
 BlazorServer/auth.json
-BlazorWebAssembly/Client/auth.json
+BlazorWebAssembly/Client/wwwroot/appsettings.json
