@@ -1,7 +1,6 @@
 {
     "Auth0": {
         "Authority": "",
-        "ClientId": "",
-        "Audience": ""
+        "ClientId": ""
     }
 }

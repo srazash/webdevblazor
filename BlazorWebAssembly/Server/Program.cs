@@ -3,8 +3,11 @@ using Data.Models.Interfaces;
 using BlazorWebAssembly.Server.Endpoints;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("auth.json");
 
 // Add services to the container.
 
@@ -21,6 +24,17 @@ builder.Services.AddOptions<BlogApiJsonDirectAccessSetting>()
 	});
 
 builder.Services.AddScoped<IBlogApi, BlogApiJsonDirectAccess>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
+{
+    c.Authority = builder.Configuration["Auth0:Authority"];
+    c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters{
+		ValidAudience = builder.Configuration["Auth0:Audience"],
+		ValidIssuer = builder.Configuration["Auth0:Authority"]
+	};
+});
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -42,6 +56,9 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapBlogPostApi();
 app.MapCategoryApi();
