@@ -7,6 +7,15 @@
     </div>
 </div>
 
+<AuthorizeView Roles="Administrator">
+    <Authorized>
+        Hi admin!
+    </Authorized>
+    <NotAuthorized>
+        You are not an admin =(
+    </NotAuthorized>
+</AuthorizeView>
+
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
         <div class="nav-item px-3">
