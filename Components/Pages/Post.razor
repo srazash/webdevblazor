@@ -35,12 +35,12 @@
 
     MarkdownPipeline pipeline;
 
-        protected override Task OnInitializedAsync()
-        {
-            pipeline = new MarkdownPipelineBuilder()
-            .UseEmojiAndSmiley()
-            .Build();
-            return base.OnInitializedAsync();
-        }
+    protected override Task OnInitializedAsync()
+    {
+        pipeline = new MarkdownPipelineBuilder()
+        .UseEmojiAndSmiley()
+        .Build();
+        return base.OnInitializedAsync();
+    }
 }
 
