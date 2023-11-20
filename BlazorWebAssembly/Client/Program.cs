@@ -2,11 +2,16 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using BlazorWebAssembly.Client;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Data;
 using Data.Models.Interfaces;
 using Components.RazorComponents;
+using Blazored.SessionStorage;
+using Components.Interfaces;
+using BlazorWebAssembly.Client.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+builder.Services.AddBlazoredSessionStorage();
+builder.Services.AddScoped<IBrowserStorage, BlogBrowserStorage>();
 
 builder.Services.AddHttpClient("Public", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 builder.Services.AddHttpClient("Authenticated", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
