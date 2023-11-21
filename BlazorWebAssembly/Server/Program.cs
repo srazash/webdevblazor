@@ -1,11 +1,12 @@
 using Data;
 using Data.Models.Interfaces;
 using BlazorWebAssembly.Server.Endpoints;
-using Microsoft.AspNetCore.ResponseCompression;
-using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using BlazorWebAssembly.Server.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSignalR();
 
 builder.Configuration.AddJsonFile("auth.json");
 
@@ -66,6 +67,9 @@ app.MapTagApi();
 
 app.MapRazorPages();
 app.MapControllers();
+
+app.MapHub<BlogNotificationHub>("/BlogNotificationHub");
+
 app.MapFallbackToFile("index.html");
 
 app.Run();
