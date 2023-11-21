@@ -1,12 +1,16 @@
 @page "/admin/blogposts/new"
 @page "/admin/blogposts/{Id}"
+
 @attribute [Authorize]
+
 @using Components.RazorComponents
 @using Markdig
+@using Components.Interfaces
 
 @inject IBlogApi _api
 @inject NavigationManager _manager
 @inject Components.Interfaces.IBrowserStorage _storage
+@inject IBlogNotificationService notificationService
 
 <EditForm Model="Post" OnValidSubmit="SavePost">
     <DataAnnotationsValidator />
@@ -93,6 +97,8 @@
     {
         if (Post.Text != null)
         {
+            await notificationService.SendNotification(Post);
+
             markDownAsHTML = Markdig.Markdown.ToHtml(Post.Text, pipeline);
 
             if (string.IsNullOrEmpty(Post.Id))

@@ -6,8 +6,11 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Components.RazorComponents;
 using Components.Interfaces;
+using BlazorServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<IBlogNotificationService, BlazorServerBlogNotificationService>();
 
 builder.Services.AddScoped<IBrowserStorage,BlogProtectedBrowserStorage>();
 
