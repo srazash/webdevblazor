@@ -1,0 +1,21 @@
+@using Components.Pages
+@using Data.Models.Interfaces
+@using Components.RazorComponents
+
+@inherits TestContext
+
+@code {
+    public IndexTest()
+    {
+        Services.AddScoped<IBlogApi, BlogApiMock>();
+    }
+
+    [Fact(DisplayName ="Checks that the Index component shows 10 posts")]
+    public void Shows10Blogposts()
+    {
+        // Act
+        var cut = Render(@<Index />);
+        // Assert that the content has 10 article tags (each representing a blogpost)
+        Assert.Equal(10,cut.FindAll("article").Count());
+    }
+}
