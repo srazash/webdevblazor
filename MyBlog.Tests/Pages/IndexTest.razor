@@ -1,6 +1,7 @@
 @using Components.Pages
 @using Data.Models.Interfaces
 @using Components.RazorComponents
+@using Data.Models
 
 @inherits TestContext
 
@@ -41,5 +42,24 @@
         var cut = Render(@<LoginStatus />);
         // Assert that there is a link with the text Log out
         Assert.Equal("Log out",cut.Find("a").InnerHtml);
+    }
+
+    [Fact(DisplayName = "Test if js method 'showConfirm' is called upon using JS interop")]
+    public void ShouldShowConfirm()
+    {
+        // Arrange
+        var moduleInterop = this.JSInterop.SetupModule("/_content/Components/RazorComponents/ItemList.razor.js");
+        moduleInterop.Setup<bool>("showConfirm", "Are you sure?").SetResult(true);
+
+        var cut = RenderComponent<ItemList<BlogPost>>(parameters => parameters
+            .Add(_ => _.Items, new() { new BlogPost() { Title = "Title" }})
+            .Add(_ => _.ItemTemplate, blogpost => $"<span>{blogpost.Title}</span>"));
+
+        // Act
+        var buttons = cut.FindAll("button");
+        buttons.First(_ => _.ClassList.Contains("btn-danger")).Click();
+
+        // Assert
+        JSInterop.VerifyInvoke("showConfirm");
     }
 }
