@@ -19,7 +19,7 @@
 	<!-- </1. Add reference to the BlazorCustomElements project -->
 	<!-- <2. Add Reference to Microsoft.AspNetCore.Components.WebAssembly.Server> -->
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.14" />
 	</ItemGroup>
 	<!-- </2. Add Reference to Microsoft.AspNetCore.Components.WebAssembly.Server> -->
 
