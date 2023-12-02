@@ -6,3 +6,4 @@ obj/
 BlazorServer/auth.json
 BlazorWebAssembly/Client/wwwroot/appsettings.json
 BlazorWebAssembly/Server/auth.json
+.DS_Store

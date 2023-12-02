@@ -1,0 +1,27 @@
+﻿@page "/"
+@using System.Runtime.InteropServices
+
+<PageTitle>Native C</PageTitle>
+
+<h1>Native C Test</h1>
+
+<p>
+    @@fact(3) result: @fact(3)
+</p>
+<p>
+    @@fact(6) result: @fact(6)
+</p>
+<p>
+    @@fact(9) result: @fact(9)
+</p>
+<p>
+    @@fact(12) result: @fact(12)
+</p>
+<p>
+    @@fact(15) result: @fact(15)
+</p>
+
+@code {
+    [DllImport("Test")]
+    static extern int fact(int n);
+}
